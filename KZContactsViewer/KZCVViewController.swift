@@ -10,6 +10,16 @@ import UIKit
 
 class KZCVViewController: UIViewController {
     
+    private var itemIndexWhenDragInitiated: Int = 0
+    
+    private func indexOfCenteredCell() -> Int {
+        let itemIndex = Int(round(self.contactsImageCollectionView.contentOffset.x / KZCVImageThumbnailCollectionView.cellSize.width))
+        let numberOfItems = self.contactsImageCollectionView.numberOfItems(inSection: 0)
+        let safeIndex = max(0, min(numberOfItems - 1, itemIndex))
+        return safeIndex
+    }
+    
+    
     private var contactsImageCollectionView: KZCVImageThumbnailCollectionView = {
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -18,11 +28,14 @@ class KZCVViewController: UIViewController {
 //        flowLayout.footerReferenceSize = CGSize(width: 200, height: 150)
         let collectionView = KZCVImageThumbnailCollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
     private var contactsDetailTableView: UITableView = {
-        return UITableView(frame: CGRect.zero, style: .plain)
+        let tableView = UITableView(frame: CGRect.zero, style: .plain)
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
     }()
     
     private var contacts: [KZCVContactObject]? = KZCVDataManager.fetchMoreContacts()
@@ -140,23 +153,41 @@ extension KZCVViewController: UITableViewDelegate, UICollectionViewDelegate {
         if self.contactsDetailTableView.contentSize.height != 0 && self.contactsImageCollectionView.contentSize.width != 0 {
         
             if scrollView == self.contactsImageCollectionView {
-//                self.contactsDetailTableView.contentOffset.y = (self.contactsImageCollectionView.contentOffset.x / self.contactsImageCollectionView.contentSize.width) * self.contactsDetailTableView.contentSize.height
+                let collectionViewScrollRatio = self.contactsImageCollectionView.contentOffset.x / KZCVImageThumbnailCollectionView.cellSize.width
+                self.contactsDetailTableView.contentOffset = CGPoint(x: 0, y: collectionViewScrollRatio * self.contactsDetailTableView.frame.height)
             }
             else if scrollView == self.contactsDetailTableView {
                 let tableViewScrollRatio = self.contactsDetailTableView.contentOffset.y / self.contactsDetailTableView.frame.height
                 self.contactsImageCollectionView.contentOffset = CGPoint(x: tableViewScrollRatio * KZCVImageThumbnailCollectionView.cellSize.width, y: 0)
-                
-                
             }
         }
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.itemIndexWhenDragInitiated = self.indexOfCenteredCell()
+    }
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView == self.contactsImageCollectionView {
-            targetContentOffset.pointee = scrollView.contentOffset
+
+            let safeIndex = self.indexOfCenteredCell()
+            
+            let indexPath = IndexPath(item: safeIndex, section: 0)
+            self.contactsDetailTableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == self.contactsImageCollectionView {
+            let safeIndex = self.indexOfCenteredCell()
+            let indexPath = IndexPath(item: safeIndex, section: 0)
+            self.contactsDetailTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+        
+    }
+
 }
+
 
 extension KZCVViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
