@@ -14,4 +14,8 @@ class KZCVContactObject: NSObject, Codable {
     var avatar_filename: String?
     var title: String?
     var introduction: String?
+    
+    func getAvatarFileNameWithNoFileExtension() -> String? {
+        return self.avatar_filename?.replacingOccurrences(of: ".png", with: "")
+    }
 }

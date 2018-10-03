@@ -15,9 +15,12 @@
 		6D35D92D2164604100F432FC /* KZContactsViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D92C2164604100F432FC /* KZContactsViewerTests.swift */; };
 		6D35D9382164604100F432FC /* KZContactsViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D9372164604100F432FC /* KZContactsViewerUITests.swift */; };
 		6D35D947216460CE00F432FC /* contacts.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D946216460CE00F432FC /* contacts.json */; };
-		6D35D9492164610600F432FC /* avatars in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D9482164610600F432FC /* avatars */; };
 		6D35D94B2164615400F432FC /* KZCVContactObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D94A2164615400F432FC /* KZCVContactObject.swift */; };
 		6D35D94D2164621F00F432FC /* KZCVDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D94C2164621F00F432FC /* KZCVDataManager.swift */; };
+		6D35D95421646DF900F432FC /* KZCVContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D95221646DF900F432FC /* KZCVContactTableViewCell.swift */; };
+		6D35D95521646DF900F432FC /* KZCVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */; };
+		6D35D9572164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */; };
+		6D35D959216476B400F432FC /* Avatars.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D958216476B400F432FC /* Avatars.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +55,12 @@
 		6D35D9372164604100F432FC /* KZContactsViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZContactsViewerUITests.swift; sourceTree = "<group>"; };
 		6D35D9392164604100F432FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D35D946216460CE00F432FC /* contacts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = contacts.json; sourceTree = "<group>"; };
-		6D35D9482164610600F432FC /* avatars */ = {isa = PBXFileReference; lastKnownFileType = folder; path = avatars; sourceTree = "<group>"; };
 		6D35D94A2164615400F432FC /* KZCVContactObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVContactObject.swift; sourceTree = "<group>"; };
 		6D35D94C2164621F00F432FC /* KZCVDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVDataManager.swift; sourceTree = "<group>"; };
+		6D35D95221646DF900F432FC /* KZCVContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVContactTableViewCell.swift; sourceTree = "<group>"; };
+		6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KZCVContactTableViewCell.xib; sourceTree = "<group>"; };
+		6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVImageThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
+		6D35D958216476B400F432FC /* Avatars.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Avatars.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,8 @@
 				6D35D9452164609F00F432FC /* DataModel */,
 				6D35D9172164604000F432FC /* AppDelegate.swift */,
 				6D35D9192164604000F432FC /* KZCVViewController.swift */,
+				6D35D95121646DCD00F432FC /* ContactTableViewCell */,
+				6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */,
 				6D35D91B2164604000F432FC /* Main.storyboard */,
 				6D35D91E2164604100F432FC /* Assets.xcassets */,
 				6D35D9202164604100F432FC /* LaunchScreen.storyboard */,
@@ -139,10 +147,27 @@
 			children = (
 				6D35D94C2164621F00F432FC /* KZCVDataManager.swift */,
 				6D35D94A2164615400F432FC /* KZCVContactObject.swift */,
-				6D35D9482164610600F432FC /* avatars */,
+				6D35D958216476B400F432FC /* Avatars.xcassets */,
 				6D35D946216460CE00F432FC /* contacts.json */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */,
+			);
+			path = ImageThumbnailCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		6D35D95121646DCD00F432FC /* ContactTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6D35D95221646DF900F432FC /* KZCVContactTableViewCell.swift */,
+				6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */,
+			);
+			path = ContactTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,8 +274,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D35D9492164610600F432FC /* avatars in Resources */,
+				6D35D95521646DF900F432FC /* KZCVContactTableViewCell.xib in Resources */,
 				6D35D947216460CE00F432FC /* contacts.json in Resources */,
+				6D35D959216476B400F432FC /* Avatars.xcassets in Resources */,
 				6D35D9222164604100F432FC /* LaunchScreen.storyboard in Resources */,
 				6D35D91F2164604100F432FC /* Assets.xcassets in Resources */,
 				6D35D91D2164604000F432FC /* Main.storyboard in Resources */,
@@ -278,8 +304,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D35D95421646DF900F432FC /* KZCVContactTableViewCell.swift in Sources */,
 				6D35D91A2164604000F432FC /* KZCVViewController.swift in Sources */,
 				6D35D9182164604000F432FC /* AppDelegate.swift in Sources */,
+				6D35D9572164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift in Sources */,
 				6D35D94B2164615400F432FC /* KZCVContactObject.swift in Sources */,
 				6D35D94D2164621F00F432FC /* KZCVDataManager.swift in Sources */,
 			);
