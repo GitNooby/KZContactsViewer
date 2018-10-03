@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class KZCVViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let stuff = KZCVDataManager.fetchMoreContacts()
+        print("\(stuff)")
+        
     }
-
 
 }
 
