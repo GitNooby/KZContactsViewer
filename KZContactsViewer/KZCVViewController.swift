@@ -134,6 +134,28 @@ extension KZCVViewController: UITableViewDelegate, UICollectionViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.contactsDetailTableView.frame.height
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if self.contactsDetailTableView.contentSize.height != 0 && self.contactsImageCollectionView.contentSize.width != 0 {
+        
+            if scrollView == self.contactsImageCollectionView {
+//                self.contactsDetailTableView.contentOffset.y = (self.contactsImageCollectionView.contentOffset.x / self.contactsImageCollectionView.contentSize.width) * self.contactsDetailTableView.contentSize.height
+            }
+            else if scrollView == self.contactsDetailTableView {
+                let tableViewScrollRatio = self.contactsDetailTableView.contentOffset.y / self.contactsDetailTableView.frame.height
+                self.contactsImageCollectionView.contentOffset = CGPoint(x: tableViewScrollRatio * KZCVImageThumbnailCollectionView.cellSize.width, y: 0)
+                
+                
+            }
+        }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView == self.contactsImageCollectionView {
+            targetContentOffset.pointee = scrollView.contentOffset
+        }
+    }
 }
 
 extension KZCVViewController: UICollectionViewDelegateFlowLayout {
@@ -162,4 +184,3 @@ extension KZCVViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: self.contactsImageCollectionView.headerFooterWidth, height: 0)
     }
 }
-
