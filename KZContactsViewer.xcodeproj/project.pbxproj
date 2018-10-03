@@ -21,6 +21,8 @@
 		6D35D95521646DF900F432FC /* KZCVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */; };
 		6D35D9572164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */; };
 		6D35D959216476B400F432FC /* Avatars.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D35D958216476B400F432FC /* Avatars.xcassets */; };
+		6DFF176E21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF176D21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift */; };
+		6DFF177021648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF176F21648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KZCVContactTableViewCell.xib; sourceTree = "<group>"; };
 		6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVImageThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
 		6D35D958216476B400F432FC /* Avatars.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Avatars.xcassets; sourceTree = "<group>"; };
+		6DFF176D21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVImageThumbnailCollectionView.swift; sourceTree = "<group>"; };
+		6DFF176F21648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KZCVImageThumbnailCollectionViewLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,7 @@
 				6D35D9452164609F00F432FC /* DataModel */,
 				6D35D9172164604000F432FC /* AppDelegate.swift */,
 				6D35D9192164604000F432FC /* KZCVViewController.swift */,
+				6DFF176C21647F3D004B6A64 /* ImageThumbnailCollectionView */,
 				6D35D95121646DCD00F432FC /* ContactTableViewCell */,
 				6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */,
 				6D35D91B2164604000F432FC /* Main.storyboard */,
@@ -168,6 +173,15 @@
 				6D35D95321646DF900F432FC /* KZCVContactTableViewCell.xib */,
 			);
 			path = ContactTableViewCell;
+			sourceTree = "<group>";
+		};
+		6DFF176C21647F3D004B6A64 /* ImageThumbnailCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				6DFF176F21648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift */,
+				6DFF176D21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift */,
+			);
+			path = ImageThumbnailCollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,11 +319,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D35D95421646DF900F432FC /* KZCVContactTableViewCell.swift in Sources */,
+				6DFF177021648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift in Sources */,
 				6D35D91A2164604000F432FC /* KZCVViewController.swift in Sources */,
 				6D35D9182164604000F432FC /* AppDelegate.swift in Sources */,
 				6D35D9572164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift in Sources */,
 				6D35D94B2164615400F432FC /* KZCVContactObject.swift in Sources */,
 				6D35D94D2164621F00F432FC /* KZCVDataManager.swift in Sources */,
+				6DFF176E21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
