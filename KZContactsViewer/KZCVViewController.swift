@@ -72,13 +72,14 @@ class KZCVViewController: UIViewController {
     }
     
     private func setFocusRingForItemAtIndexPath(_ indexPath:IndexPath) {
-        for item in self.contactsImageCollectionView.visibleCells as! [KZCVImageThumbnailCollectionViewCell] {
-            item.centered = false
+        for item in self.contactsImageCollectionView.visibleCells as!
+            [KZCVImageThumbnailCollectionViewCell] {
+            item.setGrayCircleVisible(false)
         }
         let item = self.contactsImageCollectionView.cellForItem(at: indexPath)
         if let centeredItem = item {
             if let centered = centeredItem as? KZCVImageThumbnailCollectionViewCell {
-                centered.centered = true
+                centered.setGrayCircleVisible(true)
             }
         }
     }
@@ -108,11 +109,8 @@ extension KZCVViewController: UITableViewDataSource {
                 cell.introductionTextView.text = introduction
             }
         }
-        
         return cell
     }
-    
-    
 }
 
 extension KZCVViewController: UICollectionViewDataSource {
@@ -125,6 +123,7 @@ extension KZCVViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = collectionView.dequeueReusableCell(withReuseIdentifier: "contactCollectionViewCell", for: indexPath) as! KZCVImageThumbnailCollectionViewCell
+
         
         if let contacts = self.contacts {
             let contact = contacts[indexPath.item]
@@ -133,7 +132,11 @@ extension KZCVViewController: UICollectionViewDataSource {
                 item.setImageThumbnail(image)
             }
         }
-        
+        if indexPath.item == self.indexOfCenteredCell() {
+            DispatchQueue.main.async {
+                item.setGrayCircleVisible(true)
+            }
+        }
         return item
     }
     
