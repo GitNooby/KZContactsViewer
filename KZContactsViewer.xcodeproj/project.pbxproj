@@ -120,7 +120,6 @@
 				6D35D9192164604000F432FC /* KZCVViewController.swift */,
 				6DFF176C21647F3D004B6A64 /* ImageThumbnailCollectionView */,
 				6D35D95121646DCD00F432FC /* ContactTableViewCell */,
-				6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */,
 				6D35D91B2164604000F432FC /* Main.storyboard */,
 				6D35D91E2164604100F432FC /* Assets.xcassets */,
 				6D35D9202164604100F432FC /* LaunchScreen.storyboard */,
@@ -180,6 +179,7 @@
 			children = (
 				6DFF176F21648038004B6A64 /* KZCVImageThumbnailCollectionViewLayout.swift */,
 				6DFF176D21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift */,
+				6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */,
 			);
 			path = ImageThumbnailCollectionView;
 			sourceTree = "<group>";
@@ -501,6 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KZContactsViewer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -518,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KZContactsViewer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

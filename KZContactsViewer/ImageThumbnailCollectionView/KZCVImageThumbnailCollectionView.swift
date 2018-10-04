@@ -10,7 +10,7 @@ import UIKit
 
 class KZCVImageThumbnailCollectionView: UICollectionView {
     
-    static let collectionViewHeight: CGFloat = 150.0
+    static let collectionViewHeight: CGFloat = 100.0
     static var cellSize: CGSize {
         get {
             return CGSize(width: collectionViewHeight, height: collectionViewHeight)
