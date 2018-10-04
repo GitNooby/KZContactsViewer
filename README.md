@@ -31,4 +31,6 @@ Here are some caveats which I think I could've covered further if I had more tim
   UI testing was manual through the simulators.
 4. Simulator only (no device testing):
   I didn't deploy to a device, this is because my job forbids me from creating an actual devloper account.
-  I do have access to my team's account which I use as part of my work to deploy to devices, but it didn't feel right to me to do this on my work account.
+  I do have access to my team's account which I use as part of my work to deploy to devices, but I don't feel comfortable doing this on my team's work account.
+5. Documentation:
+  The interfaces for the objects I made are pretty straight forward. I tried to let the implementations self-document as much as possible.
