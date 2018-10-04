@@ -10,6 +10,8 @@ import UIKit
 
 class KZCVImageThumbnailCollectionView: UICollectionView {
     
+    // TODO: this subclass seems mostly unnecessary, but putting static constants in the class they belong to make sense and computed values
+    
     static let collectionViewHeight: CGFloat = 100.0
     static var cellSize: CGSize {
         get {
@@ -21,18 +23,5 @@ class KZCVImageThumbnailCollectionView: UICollectionView {
             return (self.frame.width - KZCVImageThumbnailCollectionView.cellSize.width) / 2
         }
     }
-//    static var minimumSpacing: CGFloat {
-//        get {
-//            return collectionViewHeight//* 0.3 / 2
-//        }
-//    }
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    
 }

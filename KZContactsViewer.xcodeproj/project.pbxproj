@@ -155,14 +155,6 @@
 			path = DataModel;
 			sourceTree = "<group>";
 		};
-		6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */,
-			);
-			path = ImageThumbnailCollectionViewCell;
-			sourceTree = "<group>";
-		};
 		6D35D95121646DCD00F432FC /* ContactTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				6DFF176D21647F65004B6A64 /* KZCVImageThumbnailCollectionView.swift */,
-				6D35D94E21646A7300F432FC /* ImageThumbnailCollectionViewCell */,
+				6D35D9562164736E00F432FC /* KZCVImageThumbnailCollectionViewCell.swift */,
 			);
 			path = ImageThumbnailCollectionView;
 			sourceTree = "<group>";

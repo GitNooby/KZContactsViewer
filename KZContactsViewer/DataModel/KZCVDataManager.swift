@@ -13,7 +13,7 @@ class KZCVDataManager: NSObject {
     private let serialAccessQueue: DispatchQueue = DispatchQueue(label: "com.kaizou.KZContactsViewer.KZCVDataManager")
     
     class func fetchMoreContacts() -> [KZCVContactObject]? {
-        // TODO: If we're hitting an API endpoint, this function will need to be async
+        // TODO: If we're hitting an API endpoint, this function will need to return asynchrously
         return sharedDataManager.serialAccessQueue.sync { [weak sharedDataManager] in
             if sharedDataManager?.contacts.isEmpty == false {
                 return sharedDataManager?.contacts
@@ -22,6 +22,7 @@ class KZCVDataManager: NSObject {
         }
     }
     
+    // Private to prevent instantiation of singleton
     private override init() {
         super.init()
     }

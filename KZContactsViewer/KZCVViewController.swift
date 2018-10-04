@@ -10,24 +10,30 @@ import UIKit
 
 class KZCVViewController: UIViewController {
     
-    private var itemIndexWhenDragInitiated: Int = 0
-    
+    // Collection view for displaying image thumbnails
     private var contactsImageCollectionView: KZCVImageThumbnailCollectionView = {
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
+        flowLayout.itemSize = KZCVImageThumbnailCollectionView.cellSize
+        flowLayout.minimumLineSpacing = 0
         let collectionView = KZCVImageThumbnailCollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = UIColor.white
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
+    // Table view for displaying contact details
     private var contactsDetailTableView: UITableView = {
         let tableView = UITableView(frame: CGRect.zero, style: .plain)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
+    // Array of contacts to be displayed
     private var contacts: [KZCVContactObject]? = KZCVDataManager.fetchMoreContacts()
+    
+    private let collectionViewCellId = "contactCollectionViewCell"
+    private let tableViewCellId = "contactTableViewCell"
     
     override func viewWillLayoutSubviews() {
         // Layout collection view
@@ -41,7 +47,6 @@ class KZCVViewController: UIViewController {
         self.contactsDetailTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         self.contactsDetailTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         self.contactsDetailTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
     }
     
     override func viewDidLoad() {
@@ -52,25 +57,28 @@ class KZCVViewController: UIViewController {
         self.view.addSubview(self.contactsImageCollectionView)
         self.contactsImageCollectionView.delegate = self
         self.contactsImageCollectionView.dataSource = self
-        self.contactsImageCollectionView.register(KZCVImageThumbnailCollectionViewCell.self, forCellWithReuseIdentifier: "contactCollectionViewCell")
+        self.contactsImageCollectionView.register(KZCVImageThumbnailCollectionViewCell.self, forCellWithReuseIdentifier: self.collectionViewCellId)
         
         // Setup table view
         self.contactsDetailTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contactsDetailTableView)
         self.contactsDetailTableView.delegate = self
         self.contactsDetailTableView.dataSource = self
-        self.contactsDetailTableView.register(UINib(nibName: "KZCVContactTableViewCell", bundle: nil), forCellReuseIdentifier: "contactTableViewCell")
+        self.contactsDetailTableView.register(UINib(nibName: "KZCVContactTableViewCell", bundle: nil), forCellReuseIdentifier: self.tableViewCellId)
         self.contactsDetailTableView.isPagingEnabled = true
         self.contactsDetailTableView.separatorStyle = .none
     }
     
-    private func indexOfCenteredCell() -> Int {
+    // This function will determine the closest cell in collection view to the center
+    private func indexPathOfCenteredCell
+        () -> IndexPath {
         let itemIndex = Int(round(self.contactsImageCollectionView.contentOffset.x / KZCVImageThumbnailCollectionView.cellSize.width))
         let numberOfItems = self.contactsImageCollectionView.numberOfItems(inSection: 0)
         let safeIndex = max(0, min(numberOfItems - 1, itemIndex))
-        return safeIndex
+        return IndexPath(item: safeIndex, section: 0)
     }
     
+    // This function will set the grey ring for a particular cell in collection view
     private func setFocusRingForItemAtIndexPath(_ indexPath:IndexPath) {
         for item in self.contactsImageCollectionView.visibleCells as!
             [KZCVImageThumbnailCollectionViewCell] {
@@ -82,6 +90,11 @@ class KZCVViewController: UIViewController {
                 centered.setGrayCircleVisible(true)
             }
         }
+    }
+    
+    private func circleCenterImage() {
+        let indexPath = self.indexPathOfCenteredCell()
+        self.setFocusRingForItemAtIndexPath(indexPath)
     }
 
 }
@@ -95,7 +108,7 @@ extension KZCVViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "contactTableViewCell", for: indexPath) as! KZCVContactTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.tableViewCellId, for: indexPath) as! KZCVContactTableViewCell
         
         if let contacts = self.contacts {
             let contact = contacts[indexPath.row]
@@ -122,9 +135,8 @@ extension KZCVViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = collectionView.dequeueReusableCell(withReuseIdentifier: "contactCollectionViewCell", for: indexPath) as! KZCVImageThumbnailCollectionViewCell
+        let item = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewCellId, for: indexPath) as! KZCVImageThumbnailCollectionViewCell
 
-        
         if let contacts = self.contacts {
             let contact = contacts[indexPath.item]
             if let avatarFilename = contact.getAvatarFileNameWithNoFileExtension() {
@@ -132,15 +144,13 @@ extension KZCVViewController: UICollectionViewDataSource {
                 item.setImageThumbnail(image)
             }
         }
-        if indexPath.item == self.indexOfCenteredCell() {
+        if indexPath.item == self.indexPathOfCenteredCell().item {
             DispatchQueue.main.async {
                 item.setGrayCircleVisible(true)
             }
         }
         return item
     }
-    
-    
 }
 
 extension KZCVViewController: UITableViewDelegate, UICollectionViewDelegate {
@@ -149,11 +159,13 @@ extension KZCVViewController: UITableViewDelegate, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Scroll table view to correct cell when collection view cell is tapped
         self.contactsDetailTableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        // This will force collection view and table view to scroll in lock-step
         if self.contactsDetailTableView.contentSize.height != 0 && self.contactsImageCollectionView.contentSize.width != 0 {
             if scrollView == self.contactsImageCollectionView {
                 let collectionViewScrollRatio = self.contactsImageCollectionView.contentOffset.x / KZCVImageThumbnailCollectionView.cellSize.width
@@ -165,45 +177,30 @@ extension KZCVViewController: UITableViewDelegate, UICollectionViewDelegate {
             }
         }
         
-        let safeIndex = self.indexOfCenteredCell()
-        let indexPath = IndexPath(item: safeIndex, section: 0)
-        self.setFocusRingForItemAtIndexPath(indexPath)
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.itemIndexWhenDragInitiated = self.indexOfCenteredCell()
+        // Make sure the right image thumbnail is circled when scrolling
+        self.circleCenterImage()
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        // We're taking advantage of table view's paging to enforce paging for collection view
         if scrollView == self.contactsImageCollectionView {
-            let safeIndex = self.indexOfCenteredCell()
-            let indexPath = IndexPath(item: safeIndex, section: 0)
-            self.setFocusRingForItemAtIndexPath(indexPath)
-            self.contactsDetailTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.circleCenterImage()
+            self.contactsDetailTableView.scrollToRow(at: self.indexPathOfCenteredCell()
+                , at: .top, animated: true)
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // We're taking advantage of table view's paging to enforce paging for collection view
         if scrollView == self.contactsImageCollectionView {
-            let safeIndex = self.indexOfCenteredCell()
-            let indexPath = IndexPath(item: safeIndex, section: 0)
-            self.setFocusRingForItemAtIndexPath(indexPath)
-            self.contactsDetailTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.circleCenterImage()
+            self.contactsDetailTableView.scrollToRow(at: self.indexPathOfCenteredCell(), at: .top, animated: true)
         }
     }
 
 }
 
-
 extension KZCVViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return KZCVImageThumbnailCollectionView.cellSize
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.contactsImageCollectionView.headerFooterWidth, height: 0)
     }
